@@ -95,7 +95,7 @@
         </div>
     </main>
     <footer>
-        Designed by Ankit 
+        Designed by Ankit
     </footer>
 
     <script>
@@ -119,14 +119,21 @@
             const reposUrl = `https://api.github.com/users/${username}/repos`;
 
             try {
+                // Fetch user data
                 const userResponse = await fetch(userUrl);
-                if (!userResponse.ok) throw new Error('User not found');
+                if (!userResponse.ok) {
+                    handleResponseErrors(userResponse);
+                }
                 const userData = await userResponse.json();
 
+                // Fetch repository data
                 const reposResponse = await fetch(reposUrl);
-                if (!reposResponse.ok) throw new Error('Error fetching repositories');
+                if (!reposResponse.ok) {
+                    handleResponseErrors(reposResponse);
+                }
                 const reposData = await reposResponse.json();
 
+                // Render chart
                 renderChart(reposData.map(repo => repo.name), reposData.map(repo => repo.stargazers_count));
                 displayUserStats(userData);
 
@@ -136,12 +143,22 @@
             }
         }
 
+        function handleResponseErrors(response) {
+            if (response.status === 404) {
+                throw new Error('User not found');
+            } else if (response.status === 403) {
+                throw new Error('Rate limit exceeded or forbidden access');
+            } else {
+                throw new Error(`Error fetching data: ${response.statusText}`);
+            }
+        }
+
         function displayUserStats(userData) {
             document.getElementById('user-stats').innerHTML = `
-                <p><strong>Name:</strong> ${userData.name}</p>
-                <p><strong>Public Repositories:</strong> ${userData.public_repos}</p>
-                <p><strong>Followers:</strong> ${userData.followers}</p>
-                <p><strong>Following:</strong> ${userData.following}</p>
+                <p><strong>Name:</strong> ${userData.name || 'N/A'}</p>
+                <p><strong>Public Repositories:</strong> ${userData.public_repos || 'N/A'}</p>
+                <p><strong>Followers:</strong> ${userData.followers || 'N/A'}</p>
+                <p><strong>Following:</strong> ${userData.following || 'N/A'}</p>
             `;
         }
 
