@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Lens</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Git Lens</h1>
+
+        <div class="input-section">
+            <input type="text" id="githubUsername" placeholder="Enter GitHub Username">
+            <button onclick="fetchGitHubData()">Get Stats</button>
+        </div>
+
+        <div id="statsOverviewSection">
+            <h2>GitHub Stats Overview</h2>
+            <div id="profile">
+                <img id="avatar" src="" alt="">
+                <div id="profileDetails">
+                    <p id="name"></p>
+                    <p id="bio"></p>
+                </div>
+            </div>
+            <p id="publicRepos"></p>
+            <p id="followers"></p>
+            <p id="following"></p>
+        </div>
+
+        <div id="repositorySection">
+            <h2>Repository Analysis</h2>
+            <div id="repoList"></div>
+            <h3> Open Source Analysis</h3>
+            <canvas id="repositoryChart"></canvas>
+        </div>
+
+        <div id="contributionSection">
+            <h2>Contribution Analysis</h2>
+            <canvas id="contributionChart"></canvas>
+            <canvas id="languageChart"></canvas>
+        </div>
+
+        <div id="openSourceSection">
+            <h2>Open Source Contributions</h2>
+            <canvas id="openSourceChart"></canvas>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024  Git Lens. All rights reserved.
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
